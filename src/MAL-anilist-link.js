@@ -3,7 +3,7 @@
 // @namespace   https://greasyfork.org/en/users/1195345-necodes
 // @author      NECOdes
 // @description Adds Anilist anime/manga link to their MyAnimeList page
-// @version     0.0.1
+// @version     0.0.2
 // @match		https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/manga/*
 // @grant		GM_xmlhttpRequest
@@ -64,6 +64,8 @@
 			return;
 		};
 
+		const isDarkMode = document.documentElement.classList.contains('dark-mode');
+
 		// Creates and appends the Anilist link to the external_links container
 		const createAnilistLink = (container) => {
 			// prevents duplicate links
@@ -76,9 +78,9 @@
 			newButton.href = anilistUrl;
 			newButton.target = '_blank';
 			newButton.classList.add('link', 'ga-click', 'anilist-button');
-			newButton.style.backgroundColor = '#1e2630';
+			newButton.style.backgroundColor = isDarkMode ? '#1e2630' : '#fefefe';
+			newButton.style.color = isDarkMode ? '#fefefe' : '#1e2630';
 			newButton.style.borderRadius = '4px';
-			newButton.style.color = '#fefefe';
 			newButton.style.display = 'flex';
 			newButton.style.justifyContent = 'center';
 			newButton.style.fontFamily = 'inherit';

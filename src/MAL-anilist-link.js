@@ -19,7 +19,7 @@
 	const type = match[1] === 'anime' ? 'ANIME' : 'MANGA';
 	const malId = parseInt(match[2], 10);
 
-	const anilistLogo = 'https://github.com/NECOtype/userscripts/blob/8b9a59a9ebdf048838f2a5a9fffeb9228569e46d/assets/anilist-icon.png?raw=true';
+	const anilistLogo = 'https://raw.githubusercontent.com/NECOtype/userscripts/8b9a59a9ebdf048838f2a5a9fffeb9228569e46d/assets/anilist-icon.png';
 
 	const query = `
 		query ($malId: Int, $type: MediaType) {
@@ -78,7 +78,8 @@
 			newButton.style.backgroundColor = '#1e2630';
 			newButton.style.borderRadius = '4px';
 			newButton.style.color = '#fefefe';
-			newButton.style.display = 'block';
+			newButton.style.display = 'flex';
+			newButton.style.justifyContent = 'center';
 			newButton.style.fontFamily = 'inherit';
 			newButton.style.fontSize = 'inherit';
 			newButton.style.padding = '6px 0';
@@ -91,6 +92,8 @@
 			newImg.src = anilistLogo;
 			newImg.classList.add('link_icon');
 			newImg.alt = 'anilist icon';
+			newImg.style.width = '16px';
+			newImg.style.paddingInline = '3px';
 
 			const newDiv = document.createElement('div');
 			newDiv.textContent = 'View on Anilist';

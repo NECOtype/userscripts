@@ -75,9 +75,9 @@
 			newButton.href = anilistUrl;
 			newButton.target = '_blank';
 			newButton.classList.add('link', 'ga-click', 'anilist-button');
-			newButton.style.backgroundColor = '#cdcdcd';
+			newButton.style.backgroundColor = '#1e2630';
 			newButton.style.borderRadius = '4px';
-			newButton.style.color = '#121212';
+			newButton.style.color = '#fefefe';
 			newButton.style.display = 'block';
 			newButton.style.fontFamily = 'inherit';
 			newButton.style.fontSize = 'inherit';

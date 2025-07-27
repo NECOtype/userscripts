@@ -2,12 +2,13 @@
 // @name        Link MyAnimeList to AniList
 // @namespace   https://greasyfork.org/en/users/1195345-necodes
 // @author      NECOdes
-// @descritpion Adds Anilist anime/manga link to their MyAnimeList page
+// @description Adds Anilist anime/manga link to their MyAnimeList page
 // @version     0.0.1
-// @match		    https://myanimelist.net/anime/*
+// @match		https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/manga/*
-// @grant		    GM_xmlhttpRequest
-// @connect		  graphql.anilist.co
+// @grant		GM_xmlhttpRequest
+// @connect		graphql.anilist.co
+// @license     MIT
 // ==/UserScript==
 
 'use strict';

@@ -19,7 +19,7 @@
 	const type = match[1] === 'anime' ? 'ANIME' : 'MANGA';
 	const malId = parseInt(match[2], 10);
 
-	const anilistLogo = 'https://commons.wikimedia.org/wiki/File:AniList_logo.svg';
+	const anilistLogo = 'https://github.com/NECOtype/userscripts/blob/9fbd072e6de591913f5cf1a58a233d226f642118/assets/anilist-icon.png';
 
 	const query = `
 		query ($malId: Int, $type: MediaType) {

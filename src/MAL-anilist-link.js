@@ -3,7 +3,7 @@
 // @namespace   https://greasyfork.org/en/users/1195345-necodes
 // @author      NECOdes
 // @description Adds Anilist anime/manga link to their MyAnimeList page
-// @version     0.0.3
+// @version     0.1.0
 // @match		https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/manga/*
 // @grant		GM_xmlhttpRequest
@@ -64,53 +64,57 @@
 			return;
 		};
 
-		const isDarkMode = document.documentElement.classList.contains('dark-mode');
-
 		// Creates and appends the Anilist link to the external_links container
 		const createAnilistLink = (container) => {
 			// prevents duplicate links
 			if (container.querySelector('.anilist-button')) {
 				return true;
 			}
-			const secondChild = container.children[1];
+			const firstChild = container.children[0];
 
-			const newButton = document.createElement('a');
-			newButton.href = anilistUrl;
-			newButton.target = '_blank';
-			newButton.classList.add('link', 'ga-click', 'anilist-button');
-			newButton.style.backgroundColor = isDarkMode ? '#1e2630' : '#fefefe';
-			newButton.style.color = isDarkMode ? '#fefefe' : '#1e2630';
-			newButton.style.borderRadius = '4px';
-			newButton.style.display = 'flex';
-			newButton.style.justifyContent = 'center';
-			newButton.style.fontFamily = 'inherit';
-			newButton.style.fontSize = 'inherit';
-			newButton.style.padding = '6px 0';
-			newButton.style.marginBlock = '4px 0';
-			newButton.style.textDecoration = 'none';
-			newButton.style.textAlign = 'center';
-			newButton.style.width = '100%';
+			const newLink = document.createElement('a');
+			newLink.href = anilistUrl;
+			newLink.target = '_blank';
+			newLink.classList.add('link', 'ga-click', 'anilist-button');
+			newLink.style.display = 'flex';
+			newLink.style.fontFamily = 'inherit';
+			newLink.style.fontSize = 'inherit';
+			newLink.style.padding = '4px';
+			newLink.style.margin = '0';
+			newLink.style.textDecoration = 'none';
+            newLink.style.webkitBoxDirection = 'normal';
+            newLink.style.webkitBoxOrient = 'horizontal';
+            newLink.addEventListener('mouseenter', () => {
+                newLink.style.textDecoration = 'underline';
+            });
+            newLink.addEventListener('mouseleave', () => {
+                newLink.style.textDecoration = 'none';
+            });
 
 			const newImg = document.createElement('img');
 			newImg.src = favicon("https://anilist.co");
 			newImg.classList.add('link_icon');
-			newImg.alt = 'anilist icon';
-			newImg.style.width = '16px';
-			newImg.style.paddingInline = '3px';
+			newImg.alt = 'anilist-icon';
+            newImg.style.height = '20px';
 
-			const newDiv = document.createElement('div');
-			newDiv.textContent = 'View on Anilist';
-			newDiv.classList.add('caption');
+			const captionDiv = document.createElement('div');
+			captionDiv.textContent = 'Anilist';
+			captionDiv.classList.add('caption');
+            captionDiv.style.display = 'inline-block';
+            captionDiv.style.height = '20px';
+            captionDiv.style.lineHeight = '20px';
+            captionDiv.style.marginLeft = '6px';
+            captionDiv.style.overflow = 'hidden'
 
-			newButton.appendChild(newImg);
-			newButton.appendChild(newDiv);
+			newLink.appendChild(newImg);
+			newLink.appendChild(captionDiv);
 
-			container.insertBefore(newButton, secondChild)
+			container.insertBefore(newLink, firstChild)
 			return true;
 		}
 
 		const observer = new MutationObserver((mutations, obs) => {
-			const container = document.querySelector('.leftside');
+			const container = document.querySelector('.external_links');
 
 			if (container) {
 				if (createAnilistLink(container)) {

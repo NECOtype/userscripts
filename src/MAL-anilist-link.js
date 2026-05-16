@@ -81,15 +81,8 @@
 			newLink.style.fontSize = 'inherit';
 			newLink.style.padding = '4px';
 			newLink.style.margin = '0';
-			newLink.style.textDecoration = 'none';
             newLink.style.webkitBoxDirection = 'normal';
             newLink.style.webkitBoxOrient = 'horizontal';
-            newLink.addEventListener('mouseenter', () => {
-                newLink.style.textDecoration = 'underline';
-            });
-            newLink.addEventListener('mouseleave', () => {
-                newLink.style.textDecoration = 'none';
-            });
 
 			const newImg = document.createElement('img');
 			newImg.src = favicon("https://anilist.co");

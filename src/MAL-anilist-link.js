@@ -3,7 +3,7 @@
 // @namespace   https://greasyfork.org/en/users/1195345-necodes
 // @author      NECOdes
 // @description Adds Anilist anime/manga link to their MyAnimeList page
-// @version     0.0.2
+// @version     0.0.3
 // @match		https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/manga/*
 // @grant		GM_xmlhttpRequest
@@ -20,7 +20,7 @@
 	const type = match[1] === 'anime' ? 'ANIME' : 'MANGA';
 	const malId = parseInt(match[2], 10);
 
-	const anilistLogo = 'https://raw.githubusercontent.com/NECOtype/userscripts/8b9a59a9ebdf048838f2a5a9fffeb9228569e46d/assets/anilist-icon.png';
+	const favicon = (siteUrl) => `https://4get.ca/favicon?s=${encodeURIComponent(siteUrl)}`;
 
 	const query = `
 		query ($malId: Int, $type: MediaType) {
@@ -92,7 +92,7 @@
 			newButton.style.width = '100%';
 
 			const newImg = document.createElement('img');
-			newImg.src = anilistLogo;
+			newImg.src = favicon("https://anilist.co");
 			newImg.classList.add('link_icon');
 			newImg.alt = 'anilist icon';
 			newImg.style.width = '16px';

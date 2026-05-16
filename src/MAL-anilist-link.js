@@ -3,7 +3,7 @@
 // @namespace   https://greasyfork.org/en/users/1195345-necodes
 // @author      NECOdes
 // @description Adds Anilist anime/manga link to their MyAnimeList page
-// @version     0.1.0
+// @version     0.1.1
 // @match		https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/manga/*
 // @grant		GM_xmlhttpRequest
@@ -14,14 +14,18 @@
 'use strict';
 
 (async function() {
+    // Don't run on non-anime/manga pages
 	const match = window.location.pathname.match(/\/(anime|manga)\/(\d+)/);
 	if (!match) return;
 
+    // Get the type of the page and its ID
 	const type = match[1] === 'anime' ? 'ANIME' : 'MANGA';
 	const malId = parseInt(match[2], 10);
 
+    // Fetch favicon from 4get.kat.tf
 	const favicon = (siteUrl) => `https://4get.ca/favicon?s=${encodeURIComponent(siteUrl)}`;
 
+    // Prepare Anilist's Graphql query
 	const query = `
 		query ($malId: Int, $type: MediaType) {
 			Media(idMal: $malId, type: $type) {
@@ -50,6 +54,7 @@
 	};
 
 	try {
+        // Fetch the anime/manga info
 		const response = await gmFetch({
 			method: 'POST',
 			url: 'https://graphql.anilist.co',
@@ -57,12 +62,13 @@
 			data: JSON.stringify({ query, variables }),
 		})
 
+        // Get anime/manga url
 		const json = JSON.parse(response.responseText);
 		const anilistUrl = json?.data?.Media?.siteUrl;
 		if (!anilistUrl) {
 			console.warn('Anilist URL not found for this entry.')
 			return;
-		};
+		}
 
 		// Creates and appends the Anilist link to the external_links container
 		const createAnilistLink = (container) => {
@@ -72,6 +78,7 @@
 			}
 			const firstChild = container.children[0];
 
+            // Create Anilist <a> tag element
 			const newLink = document.createElement('a');
 			newLink.href = anilistUrl;
 			newLink.target = '_blank';
@@ -84,12 +91,14 @@
             newLink.style.webkitBoxDirection = 'normal';
             newLink.style.webkitBoxOrient = 'horizontal';
 
+            // Create <img> tag for the Anilist link
 			const newImg = document.createElement('img');
 			newImg.src = favicon("https://anilist.co");
 			newImg.classList.add('link_icon');
 			newImg.alt = 'anilist-icon';
             newImg.style.height = '20px';
 
+            // Create caption <div> for the Anilist link
 			const captionDiv = document.createElement('div');
 			captionDiv.textContent = 'Anilist';
 			captionDiv.classList.add('caption');
@@ -97,15 +106,18 @@
             captionDiv.style.height = '20px';
             captionDiv.style.lineHeight = '20px';
             captionDiv.style.marginLeft = '6px';
-            captionDiv.style.overflow = 'hidden'
+            captionDiv.style.overflow = 'hidden';
 
+            // Append both img and caption to Anilist link as children
 			newLink.appendChild(newImg);
 			newLink.appendChild(captionDiv);
 
+            // Insert the Anilist link element before the first child in .external_links
 			container.insertBefore(newLink, firstChild)
 			return true;
 		}
 
+        // Waits for .external_links to appear in the DOM
 		const observer = new MutationObserver((mutations, obs) => {
 			const container = document.querySelector('.external_links');
 

@@ -3,7 +3,7 @@
 // @namespace   https://greasyfork.org/en/users/1195345-necodes
 // @author      NECOdes
 // @description Adds Anilist anime/manga link to their MyAnimeList page
-// @version     0.1.1
+// @version     0.1.2
 // @match		https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/manga/*
 // @grant		GM_xmlhttpRequest
@@ -71,7 +71,22 @@
 		}
 
 		// Creates and appends the Anilist link to the external_links container
-		const createAnilistLink = (container) => {
+		const createAnilistLink = (panel) => {
+
+			let container = document.querySelector('.external_links');
+
+            // create the container element if the manga/anime doesnt have it
+            if (!container) {
+                const header = document.createElement('h2');
+                container = document.createElement('div');
+
+                container.classList.add('external_links');
+                header.textContent = "Available at"
+
+                panel.append(header);
+                panel.append(container);
+            }
+
 			// prevents duplicate links
 			if (container.querySelector('.anilist-button')) {
 				return true;
@@ -117,18 +132,16 @@
 			return true;
 		}
 
-        // Waits for .external_links to appear in the DOM
-		const observer = new MutationObserver((mutations, obs) => {
-			const container = document.querySelector('.external_links');
+        // Waits for .leftside to appear in the DOM
+		const panel = document.querySelector('.leftside') ?? await new Promise(resolve => {
+			const observer = new MutationObserver((_, obs) => {
+				const el = document.querySelector('.leftside');
+				if (el) { obs.disconnect(); resolve(el); }
+			});
+			observer.observe(document.body, { childList: true, subtree: true });
+		});
+		createAnilistLink(panel);
 
-			if (container) {
-				if (createAnilistLink(container)) {
-					obs.disconnect();
-				}
-			}
-		})
-
-		observer.observe(document.body, { childList: true, subtree: true });
 	} catch (err) {
 		console.error('Anilist API request failed: ', err);
 	}

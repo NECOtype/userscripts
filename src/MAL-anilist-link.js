@@ -65,10 +65,6 @@
         // Get anime/manga url
 		const json = JSON.parse(response.responseText);
 		const anilistUrl = json?.data?.Media?.siteUrl;
-		if (!anilistUrl) {
-			console.warn('Anilist URL not found for this entry.')
-			return;
-		}
 
 		// Creates and appends the Anilist link to the external_links container
 		const createAnilistLink = (panel) => {
@@ -95,8 +91,12 @@
 
             // Create Anilist <a> tag element
 			const newLink = document.createElement('a');
-			newLink.href = anilistUrl;
-			newLink.target = '_blank';
+			if (anilistUrl) {
+				newLink.href = anilistUrl;
+				newLink.target = '_blank';
+			} else {
+				newLink.href = "javascript:void(0)";
+			}
 			newLink.classList.add('link', 'ga-click', 'anilist-button');
 			newLink.style.display = 'flex';
 			newLink.style.fontFamily = 'inherit';
@@ -122,6 +122,17 @@
             captionDiv.style.lineHeight = '20px';
             captionDiv.style.marginLeft = '6px';
             captionDiv.style.overflow = 'hidden';
+
+            // if entry doesnt have an anilist page
+            if (!anilistUrl) {
+			    console.warn('Anilist URL not found for this entry.')
+
+                newLink.style.cursor = "not-allowed";
+
+                newLink.style.textDecoration = "none";
+                newLink.style.color = "gray";
+                newLink.setAttribute('title', "This entry doesn't have an Anilist page or isn't linked yet.");
+            }
 
             // Append both img and caption to Anilist link as children
 			newLink.appendChild(newImg);

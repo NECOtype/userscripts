@@ -22,8 +22,8 @@
 	const type = match[1] === 'anime' ? 'ANIME' : 'MANGA';
 	const malId = parseInt(match[2], 10);
 
-    // Fetch favicon from 4get.kat.tf
-	const favicon = (siteUrl) => `https://4get.ca/favicon?s=${encodeURIComponent(siteUrl)}`;
+    // Fetch favicon from favicone.com
+	const favicon = (siteUrl) => `https://favicone.com/${encodeURIComponent(siteUrl)}`;
 
     // Prepare Anilist's Graphql query
 	const query = `
@@ -108,7 +108,7 @@
 
             // Create <img> tag for the Anilist link
 			const newImg = document.createElement('img');
-			newImg.src = favicon("https://anilist.co");
+			newImg.src = favicon("anilist.co");
 			newImg.classList.add('link_icon');
 			newImg.alt = 'anilist-icon';
             newImg.style.height = '20px';

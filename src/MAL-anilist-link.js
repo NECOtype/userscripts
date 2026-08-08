@@ -23,11 +23,11 @@
     // If page url has query for it's id, extract them and put inside match[]
     // and trying to perserve match[1]===manga/anime and match[2]===id structure
     if (!match && window.location.pathname.match(/\/(manga|anime).php/)) {
-        const id = window.location.search.match(/(\?)id=(\d+)/)[2]
-        const pageType = window.location.pathname.match(/\/(manga|anime).php/)[1]
+        const id = new URLSearchParams(window.location.search).get("id");
+        const pageType = window.location.pathname.match(/\/(manga|anime).php/)[1];
 
         if (id && /^\d+$/.test(id)) {
-            match = ["gurenya", pageType, id]
+            match = ["gurenya", pageType, id];
         }
     }
     if (!match) return;

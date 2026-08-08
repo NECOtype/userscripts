@@ -3,10 +3,12 @@
 // @namespace   https://greasyfork.org/en/users/1195345-necodes
 // @author      NECOdes
 // @description Adds Anilist anime/manga link to their MyAnimeList page
-// @version     0.2.1
+// @version     0.2.2
 // @icon        https://anilist.co/img/icons/apple-touch-icon.png
 // @match		https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/manga/*
+// @match		https://myanimelist.net/anime.php?id=*
+// @match       https://myanimelist.net/manga.php?id=*
 // @grant		GM_xmlhttpRequest
 // @connect		graphql.anilist.co
 // @license     MIT
@@ -16,8 +18,20 @@
 
 (async function() {
     // Don't run on non-anime/manga pages
-	const match = window.location.pathname.match(/\/(anime|manga)\/(\d+)/);
-	if (!match) return;
+    let match = window.location.pathname.match(/\/(anime|manga)\/(\d+)/);
+
+    // If page url has query for it's id, extract them and put inside match[]
+    // and trying to perserve match[1]===manga/anime and match[2]===id structure
+    if (!match && window.location.pathname.match(/\/(manga|anime).php/)) {
+        const id = parseInt(window.location.search.match(/(\?)id=(\d+)/)[2], 10)
+        const pageType = window.location.pathname.match(/\/(manga|anime).php/)[1]
+
+        if (id && /^\d+$/.test(id)) {
+            match = ["gurenya", pageType, id]
+        }
+    } else {
+        return;
+    }
 
     // Get the type of the page and its ID
 	const type = match[1] === 'anime' ? 'ANIME' : 'MANGA';

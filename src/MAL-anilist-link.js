@@ -29,9 +29,8 @@
         if (id && /^\d+$/.test(id)) {
             match = ["gurenya", pageType, id]
         }
-    } else {
-        return;
     }
+    if (!match) return;
 
     // Get the type of the page and its ID
 	const type = match[1] === 'anime' ? 'ANIME' : 'MANGA';

@@ -3,7 +3,8 @@
 // @namespace   https://greasyfork.org/en/users/1195345-necodes
 // @author      NECOdes
 // @description Adds Anilist anime/manga link to their MyAnimeList page
-// @version     0.1.2
+// @version     0.1.3
+// @icon        https://anilist.co/img/icons/apple-touch-icon.png
 // @match		https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/manga/*
 // @grant		GM_xmlhttpRequest

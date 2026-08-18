@@ -3,7 +3,7 @@
 // @namespace   https://greasyfork.org/en/users/1195345-necodes
 // @author      NECOdes
 // @description Adds Anilist anime/manga link to their MyAnimeList page
-// @version     0.2.2
+// @version     0.2.3
 // @icon        https://anilist.co/img/icons/apple-touch-icon.png
 // @match		https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/manga/*
@@ -15,9 +15,9 @@
 // ==/UserScript==
 // jshint esversion 11
 
-'use strict';
-
 (async function() {
+    'use strict';
+
     // Don't run on non-anime/manga pages
     let match = window.location.pathname.match(/\/(anime|manga)\/(\d+)/);
 

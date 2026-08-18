@@ -8,11 +8,11 @@ jobs:
     mirror:
         runs-on: ubuntu-latest
         steps:
-            - uses:  actions/checkout@v6
+            - uses: actions/checkout@v6
               with:
-                    fetch-depth: 0
+                  fetch-depth: 0
             - uses: NECOtype/mirror-action@master
               with:
-                    REMOTE: "ssh://git@codeberg.org/NECOdes/${{ github.event.repository.name }}.git"
-                    GIT_SSH_PRIVATE_KEY: ${{ secrets.CODEBERG_SSH_PRIVATE_KEY }}
-                    GIT_SSH_KNOWN_HOSTS: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}
+                  REMOTE: "ssh://git@codeberg.org/NECOdes/${{ github.event.repository.name }}.git"
+                  GIT_SSH_PRIVATE_KEY: ${{ secrets.CODEBERG_SSH_PRIVATE_KEY }}
+                  GIT_SSH_KNOWN_HOSTS: ${{ secrets.CODEBERG_SSH_KNOWN_HOSTS }}

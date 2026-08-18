@@ -117,7 +117,7 @@
                 newLink.style.textDecoration = "none";
                 newLink.style.color = "gray";
                 newLink.setAttribute('title', "This entry doesn't have an Anilist page or isn't linked yet.");
-				newLink.href = "";
+				newLink.href = "#";
                 newLink.onclick = (event) => event.preventDefault();
 			}
 			newLink.classList.add('link', 'ga-click', 'anilist-button');

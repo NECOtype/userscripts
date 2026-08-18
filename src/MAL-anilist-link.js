@@ -13,6 +13,7 @@
 // @connect		graphql.anilist.co
 // @license     MIT
 // ==/UserScript==
+// jshint esversion 11
 
 'use strict';
 

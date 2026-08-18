@@ -110,7 +110,15 @@
 				newLink.href = anilistUrl;
 				newLink.target = '_blank';
 			} else {
-				newLink.href = "javascript:void(0)";
+                // if entry doesnt have an anilist page
+			    console.warn('Anilist URL not found for this entry.')
+
+                newLink.style.cursor = "not-allowed";
+                newLink.style.textDecoration = "none";
+                newLink.style.color = "gray";
+                newLink.setAttribute('title', "This entry doesn't have an Anilist page or isn't linked yet.");
+				newLink.href = "";
+                newLink.onclick = (event) => event.preventDefault();
 			}
 			newLink.classList.add('link', 'ga-click', 'anilist-button');
 			newLink.style.display = 'flex';
@@ -137,17 +145,6 @@
             captionDiv.style.lineHeight = '20px';
             captionDiv.style.marginLeft = '6px';
             captionDiv.style.overflow = 'hidden';
-
-            // if entry doesnt have an anilist page
-            if (!anilistUrl) {
-			    console.warn('Anilist URL not found for this entry.')
-
-                newLink.style.cursor = "not-allowed";
-
-                newLink.style.textDecoration = "none";
-                newLink.style.color = "gray";
-                newLink.setAttribute('title', "This entry doesn't have an Anilist page or isn't linked yet.");
-            }
 
             // Append both img and caption to Anilist link as children
 			newLink.appendChild(newImg);
